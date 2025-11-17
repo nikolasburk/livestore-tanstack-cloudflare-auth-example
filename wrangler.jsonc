@@ -1,0 +1,26 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "livestore-todo-auth-app",
+  "compatibility_date": "2025-09-02",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "main": "./src/server.ts",
+  // "main": "@tanstack/react-start/server-entry",
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "SYNC_BACKEND_DO",
+        "class_name": "SyncBackendDO"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": [
+        "SyncBackendDO"
+      ]
+    }
+  ]
+}

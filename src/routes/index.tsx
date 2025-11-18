@@ -1,11 +1,25 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 
 import { useStore } from '@livestore/react'
 import { tables, events, Filter } from '../livestore/schema'
 import { queryDb } from '@livestore/livestore'
+import authClient from '../lib/authClient'
 
 
-export const Route = createFileRoute('/')({ component: App, ssr: false })
+export const Route = createFileRoute('/')({
+  component: App,
+  ssr: false,
+  beforeLoad: async () => {
+    // Check if user is authenticated
+    const session = await authClient.getSession()
+    console.log('index.tsx: beforeLoad with session', session)
+    if (!session?.data?.session) {
+      throw redirect({
+        to: '/login',
+      })
+    }
+  },
+})
 
 function App() {
 

@@ -1,6 +1,5 @@
-import { Link } from '@tanstack/react-router'
-
-import { useState } from 'react'
+import { Link, useNavigate, useRouterState } from '@tanstack/react-router'
+import { useState, useEffect } from 'react'
 import {
   ChevronDown,
   ChevronRight,
@@ -10,29 +9,94 @@ import {
   SquareFunction,
   StickyNote,
   X,
+  LogOut,
+  User,
 } from 'lucide-react'
+import authClient from '../lib/authClient'
 
 export default function Header() {
+  const navigate = useNavigate()
+  const routerState = useRouterState()
   const [isOpen, setIsOpen] = useState(false)
   const [groupedExpanded, setGroupedExpanded] = useState<
     Record<string, boolean>
   >({})
+  const [user, setUser] = useState<{ name?: string; email?: string } | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+
+  // Fetch session on mount and when route changes (to catch login/logout)
+  useEffect(() => {
+    const loadSession = async () => {
+      try {
+        const session = await authClient.getSession()
+        setUser(session?.data?.user || null)
+      } catch (error) {
+        console.error('Failed to load session:', error)
+        setUser(null)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    loadSession()
+  }, [routerState.location.pathname]) // Re-fetch when route changes
+
+  const handleLogout = async () => {
+    try {
+      await authClient.signOut()
+      setUser(null)
+      navigate({ to: '/login' })
+    } catch (error) {
+      console.error('Failed to logout:', error)
+    }
+  }
 
   return (
     <>
-      <header className="p-4 flex items-center bg-gray-800 text-white shadow-lg">
-        <button
-          onClick={() => setIsOpen(true)}
-          className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
-          aria-label="Open menu"
-        >
-          <Menu size={24} />
-        </button>
-        <h1 className="ml-4 text-xl font-semibold">
-          <Link to="/">
-            TODOs
-          </Link>
-        </h1>
+      <header className="p-4 flex items-center justify-between bg-gray-800 text-white shadow-lg">
+        <div className="flex items-center">
+          <button
+            onClick={() => setIsOpen(true)}
+            className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
+            aria-label="Open menu"
+          >
+            <Menu size={24} />
+          </button>
+          <h1 className="ml-4 text-xl font-semibold">
+            <Link to="/">
+              TODOs
+            </Link>
+          </h1>
+        </div>
+        
+        {/* User Info & Logout */}
+        {!isLoading && (
+          <>
+            {user ? (
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <User size={18} />
+                  <span className="text-sm font-medium">{user.name || user.email}</span>
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium bg-gray-700 hover:bg-gray-600 rounded-md transition-colors"
+                  aria-label="Logout"
+                >
+                  <LogOut size={16} />
+                  <span>Logout</span>
+                </button>
+              </div>
+            ) : (
+              <Link
+                to="/login"
+                className="px-3 py-1.5 text-sm font-medium bg-gray-700 hover:bg-gray-600 rounded-md transition-colors"
+              >
+                Login
+              </Link>
+            )}
+          </>
+        )}
       </header>
 
       <aside

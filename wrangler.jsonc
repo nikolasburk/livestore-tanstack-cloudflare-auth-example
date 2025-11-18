@@ -1,26 +1,34 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "livestore-todo-auth-app",
-  "compatibility_date": "2025-09-02",
-  "compatibility_flags": [
-    "nodejs_compat"
-  ],
-  "main": "./src/server.ts",
-  // "main": "@tanstack/react-start/server-entry",
-  "durable_objects": {
-    "bindings": [
-      {
-        "name": "SYNC_BACKEND_DO",
-        "class_name": "SyncBackendDO"
-      }
-    ]
-  },
-  "migrations": [
-    {
-      "tag": "v1",
-      "new_sqlite_classes": [
-        "SyncBackendDO"
-      ]
-    }
-  ]
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "livestore-todo-auth-app",
+	"compatibility_date": "2025-09-02",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"main": "./src/server.ts",
+	// "main": "@tanstack/react-start/server-entry",
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "SYNC_BACKEND_DO",
+				"class_name": "SyncBackendDO"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": [
+				"SyncBackendDO"
+			]
+		}
+	],
+	"d1_databases": [
+		{
+			"binding": "auth_db",
+			"database_name": "auth-db",
+			"database_id": "d4d3b994-1a05-43cb-8cd5-b668b73d0d53",
+      "migrations_dir": "drizzle"
+		}
+	]
 }

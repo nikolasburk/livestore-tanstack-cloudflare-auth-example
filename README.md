@@ -10,6 +10,12 @@ This repo contains an example todo app that showcases how to implement authentic
 
 After authentication, every user of the app receives their own local instance of a LiveStore DB that they can use locally on their machine, ensuring full isolation as well as offline access. 
 
+<details><summary>Expand for a badly drawn diagram</summary>
+
+![](./flow-diagram.png)
+
+</details>
+
 ## Usage
 
 ### 1. Clone repo

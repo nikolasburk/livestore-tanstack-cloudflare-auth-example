@@ -77,3 +77,19 @@ To deploy the app, you can run:
 ```
 pnpm run deploy
 ```
+
+
+## TODOs
+
+### Add auth token exchange to syncing
+
+The auth mechanism currently isn't fully safe:
+
+- Anyone could connect to another user's sync endpoint if they knew/guessed the `storeId` (which is not too difficult)
+- No verification that sync operations (`onPush`/`onPull`) are from an authenticated user
+
+The solution will be to add an auth token to the WebSockets that are doing the syncing, something similar to this:
+
+1. Extract the auth token from the WebSocket connection (headers or query params)
+1. Verify the token using BetterAuth in the sync handlers
+1. Ensure the authenticated user matches the `storeId`/`userId` associated with the sync operation

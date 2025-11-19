@@ -8,6 +8,7 @@ import { cloudflare } from '@cloudflare/vite-plugin'
 import { livestoreDevtoolsPlugin } from '@livestore/devtools-vite'
 
 const config = defineConfig({
+  // logLevel: 'warn', // Options: 'info' | 'warn' | 'error' | 'silent'
   plugins: [
     devtools(),
     cloudflare({ viteEnvironment: { name: 'ssr' } }),

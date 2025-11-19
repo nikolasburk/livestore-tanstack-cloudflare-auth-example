@@ -11,7 +11,7 @@ function createAuth(env?: Env, cf?: IncomingRequestCfProperties) {
   // console.log('createAuth with IncomingRequestCfProperties', cf);
 
   // Use actual DB for runtime, empty object for CLI
-  const db = env ? drizzle(env.auth_db, { schema, logger: true }) : ({} as any);
+  const db = env ? drizzle(env.auth_db, { schema, logger: false }) : ({} as any);
 
   return betterAuth({
     baseURL: env?.BETTER_AUTH_URL,
@@ -25,7 +25,7 @@ function createAuth(env?: Env, cf?: IncomingRequestCfProperties) {
             db,
             options: {
               usePlural: true,
-              debugLogs: true,
+              debugLogs: false,
             },
           }
           : undefined,
@@ -60,7 +60,7 @@ function createAuth(env?: Env, cf?: IncomingRequestCfProperties) {
         database: drizzleAdapter({} as D1Database, {
           provider: "sqlite",
           usePlural: true,
-          debugLogs: true,
+          debugLogs: false,
         }),
       }),
   });

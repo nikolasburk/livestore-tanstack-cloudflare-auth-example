@@ -3,20 +3,19 @@ import { default as tanstackServerEntry } from '@tanstack/react-start/server-ent
 import * as SyncBackend from '@livestore/sync-cf/cf-worker'
 
 // Import your Durable Object
-import { SyncBackendDO } from './sync/client-ws'
-import { createAuth } from './auth'
+import { SyncBackendDO } from '@/sync/client-ws'
+import { createAuth } from '@/auth'
 
 import type { CfTypes } from '@livestore/sync-cf/cf-worker'
 
 // Export your Durable Objects so Cloudflare Workers can find it
 export { SyncBackendDO }
 
-
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext) {
     const url = new URL(request.url)
 
-    console.log('server.ts: fetch from: ', url.href)
+      console.log('server.ts: fetch from: ', url.href)
 
     // Handle Better Auth routes
     if (url.pathname.startsWith('/api/auth/')) {
@@ -26,7 +25,7 @@ export default {
 
     const searchParams = SyncBackend.matchSyncRequest(request as unknown as CfTypes.Request)
     if (searchParams !== undefined) {
-      console.log('server.ts: fetch in  with searchParams', searchParams)
+      console.log('server.ts: handleSyncRequest with searchParams', searchParams)
       return SyncBackend.handleSyncRequest({
         request: request as unknown as CfTypes.Request,
         searchParams,

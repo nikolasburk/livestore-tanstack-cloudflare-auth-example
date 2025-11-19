@@ -12,7 +12,7 @@ import {
   LogOut,
   User,
 } from 'lucide-react'
-import authClient from '../lib/authClient'
+import authClient from '@/lib/authClient'
 
 export default function Header() {
   const navigate = useNavigate()

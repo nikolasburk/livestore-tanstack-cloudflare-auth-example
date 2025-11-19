@@ -1,9 +1,9 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
 import { useStore } from '@livestore/react'
-import { tables, events, Filter } from '../livestore/schema'
+import { tables, events, Filter } from '@/livestore/schema'
 import { queryDb } from '@livestore/livestore'
-import authClient from '../lib/authClient'
+import authClient from '@/lib/authClient'
 
 
 export const Route = createFileRoute('/')({

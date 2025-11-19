@@ -43,7 +43,7 @@ CLOUDFLARE_D1_TOKEN=XDPhgV57Tr-zljPhXdsyiuAG4V_gjFq1b8FNiZoJ
 
 #### 2.2. Better Auth configuration
 
-Set the `BETTER_AUTH_SECRET` to a value of your choice. You can also generate a secret [here](https://www.better-auth.com/docs/installation#set-environment-variables) by clicking on the **Generate Secret** button. Here are some
+Set the `BETTER_AUTH_SECRET` to a value of your choice. You can also generate a secret [here](https://www.better-auth.com/docs/installation#set-environment-variables) by clicking on the **Generate Secret** button. Here are some real-looking sample values:
 
 ```bash
 # replace these values with your own

@@ -72,7 +72,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       }
     }
     initStore()
-  }, [])
+  }, [location.pathname, location.search])
 
   // Show loading state while determining storeId
   if (isLoading) {

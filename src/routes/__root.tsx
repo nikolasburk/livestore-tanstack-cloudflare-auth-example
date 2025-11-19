@@ -1,4 +1,4 @@
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
+import { HeadContent, Scripts, createRootRoute, useRouterState } from '@tanstack/react-router'
 // import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 // import { TanStackDevtools } from '@tanstack/react-devtools'
 import { useState, useEffect } from 'react'
@@ -48,7 +48,9 @@ export const Route = createRootRoute({
 function RootDocument({ children }: { children: React.ReactNode }) {
   const [storeId, setStoreId] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true)
-
+  const routerState = useRouterState()
+  const location = routerState.location
+  
   useEffect(() => {
     const initStore = async () => {
       try {

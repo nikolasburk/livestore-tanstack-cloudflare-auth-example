@@ -50,7 +50,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true)
   const routerState = useRouterState()
   const location = routerState.location
-  
+
   useEffect(() => {
     const initStore = async () => {
       try {
@@ -63,7 +63,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         } else {
           // For unauthenticated users, use a temporary storeId
           // This allows the app to render, but routes will redirect to login
-          setStoreId('livestore-todo-app-v2-guest')
+          setStoreId('livestore-todo-app-v3-guest')
         }
       } catch (error) {
         console.error('Failed to initialize store:', error)
@@ -123,7 +123,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <LiveStoreProvider
           schema={schema}
           adapter={adapter}
-          renderLoading={(_) => <div>Loading LiveStore ({_.stage})...</div>}
+          renderLoading={(_) => <div>Loading LiveStore ({storeId} | {_.stage})...</div>}
           storeId={storeId}
           batchUpdates={batchUpdates}
         >
